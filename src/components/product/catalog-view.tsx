@@ -59,8 +59,9 @@ export function CatalogView() {
       }
     });
 
+    const queryString = params.toString();
     startTransition(() => {
-      router.push(`/produtos?${params.toString()}`, { scroll: false });
+      router.push(queryString ? `/produtos?${queryString}` : "/produtos", { scroll: false });
     });
   };
 

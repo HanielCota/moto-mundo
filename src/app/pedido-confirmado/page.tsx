@@ -53,12 +53,20 @@ export default function PedidoConfirmadoPage() {
 
   const [copied, setCopied] = useState(false);
 
-  const handleCopyCode = () => {
+  const handleCopyCode = async () => {
     if (!order) return;
-    navigator.clipboard.writeText(order.id);
-    setCopied(true);
-    toast.success("Código do pedido copiado!");
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(order.id);
+        setCopied(true);
+        toast.success("Código do pedido copiado!");
+        setTimeout(() => setCopied(false), 2000);
+      } else {
+        toast.info(`Código: ${order.id}`);
+      }
+    } catch {
+      toast.info(`Código: ${order.id}`);
+    }
   };
 
   if (!isHydrated) {

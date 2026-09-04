@@ -10,7 +10,7 @@ import { checkoutSchema, CheckoutSchemaType } from "@/lib/checkout-schema";
 import { useCart } from "@/hooks/use-cart";
 import { groupCartByStore, calculateCartTotals } from "@/lib/cart";
 import { formatBRL, calculateInstallments } from "@/lib/format";
-import { formatCPF, formatPhone, formatCEP } from "@/lib/cpf";
+import { formatCPF, formatPhone, formatCEP, formatCardNumber, formatExpiryDate } from "@/lib/cpf";
 import { isValidCEP, getAddressFromCEP, getStoreShippingOptions, SHIPPING_RATES } from "@/lib/shipping";
 import { getStoreByIdSync } from "@/lib/products";
 import { FormField } from "@/components/shared/form-field";
@@ -58,6 +58,7 @@ export function CheckoutView() {
     register,
     handleSubmit,
     setValue,
+    getValues,
     control,
     formState: { errors },
   } = useForm<CheckoutSchemaType>({
@@ -95,6 +96,24 @@ export function CheckoutView() {
       router.push("/carrinho");
     }
   }, [isHydrated, items, router, isSubmittingOrder]);
+
+  // Ensure shippingSelections in form state is synced when storeGroups hydrate
+  useEffect(() => {
+    if (storeGroups.length > 0) {
+      const current = getValues("shippingSelections") || {};
+      let changed = false;
+      const updated = { ...current };
+      storeGroups.forEach((group) => {
+        if (!updated[group.storeId]) {
+          updated[group.storeId] = "economica";
+          changed = true;
+        }
+      });
+      if (changed) {
+        setValue("shippingSelections", updated, { shouldValidate: true });
+      }
+    }
+  }, [storeGroups, setValue, getValues]);
 
   // Calculate actual shipping costs based on selected options per store
   const customShippingByStore = useMemo(() => {
@@ -351,10 +370,12 @@ export function CheckoutView() {
                 >
                   <input
                     type="text"
+                    id="cep"
                     placeholder="35900-000"
                     maxLength={9}
-                    value={currentCep}
-                    onChange={handleCepChange}
+                    {...register("cep", {
+                      onChange: handleCepChange,
+                    })}
                     className="w-full h-10 px-3 rounded-lg border border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono"
                   />
                 </FormField>
@@ -659,8 +680,13 @@ export function CheckoutView() {
                     <input
                       type="text"
                       placeholder="0000 0000 0000 0000"
-                      maxLength={19}
-                      {...register("cardNumber")}
+                      maxLength={23}
+                      {...register("cardNumber", {
+                        onChange: (e) =>
+                          setValue("cardNumber", formatCardNumber(e.target.value), {
+                            shouldValidate: true,
+                          }),
+                      })}
                       className="w-full h-10 px-3 rounded-lg border border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono"
                     />
                   </FormField>
@@ -690,7 +716,12 @@ export function CheckoutView() {
                         type="text"
                         placeholder="12/28"
                         maxLength={5}
-                        {...register("expiryDate")}
+                        {...register("expiryDate", {
+                          onChange: (e) =>
+                            setValue("expiryDate", formatExpiryDate(e.target.value), {
+                              shouldValidate: true,
+                            }),
+                        })}
                         className="w-full h-10 px-3 rounded-lg border border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono"
                       />
                     </FormField>

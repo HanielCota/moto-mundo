@@ -11,7 +11,7 @@ export function calculateDiscountPercent(
   originalPrice?: number,
   price?: number
 ): number {
-  if (!originalPrice || !price || originalPrice <= price) {
+  if (!originalPrice || !price || originalPrice <= price || originalPrice <= 0) {
     return 0;
   }
   return Math.round(((originalPrice - price) / originalPrice) * 100);
@@ -24,8 +24,15 @@ export interface InstallmentsInfo {
 }
 
 export function calculateInstallments(price: number): InstallmentsInfo {
+  if (price <= 0 || isNaN(price)) {
+    return {
+      count: 1,
+      value: 0,
+      formatted: "1x de R$ 0,00",
+    };
+  }
   const count = price >= 200 ? 10 : 3;
-  const value = price / count;
+  const value = Math.round((price / count) * 100) / 100;
   return {
     count,
     value,

@@ -59,6 +59,14 @@ export async function getProductsByStore(storeIdOrSlug: string): Promise<Product
   return PRODUCTS.filter((p) => p.storeId === store.id);
 }
 
+export function normalizeSearchTerm(str: string): string {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
 export async function getRelatedProducts(
   product: Product,
   limit: number = 4
@@ -67,7 +75,16 @@ export async function getRelatedProducts(
     (p) =>
       p.id !== product.id &&
       (p.categoryId === product.categoryId || p.storeId === product.storeId)
-  ).slice(0, limit);
+  )
+    .sort((a, b) => {
+      // Prioritize same category first
+      const aSameCat = a.categoryId === product.categoryId ? 1 : 0;
+      const bSameCat = b.categoryId === product.categoryId ? 1 : 0;
+      if (bSameCat !== aSameCat) return bSameCat - aSameCat;
+      // Then prioritize higher rated
+      return b.rating - a.rating;
+    })
+    .slice(0, limit);
 }
 
 export async function getFeaturedProducts(limit: number = 8): Promise<Product[]> {
@@ -92,48 +109,61 @@ export async function searchProducts(params: ProductSearchParams): Promise<Produ
 function filterProductsCore(params: ProductSearchParams): Product[] {
   let results = [...PRODUCTS];
 
-  // Text search (name, description, specs)
+  // Text search (name, description, specs) with diacritics/accent normalization
   if (params.q && params.q.trim() !== "") {
-    const query = params.q.toLowerCase().trim();
+    const query = normalizeSearchTerm(params.q);
     results = results.filter((p) => {
-      const nameMatch = p.name.toLowerCase().includes(query);
-      const descMatch = p.description.toLowerCase().includes(query);
+      const nameMatch = normalizeSearchTerm(p.name).includes(query);
+      const descMatch = normalizeSearchTerm(p.description).includes(query);
       const specsMatch = Object.values(p.specs).some((val) =>
-        val.toLowerCase().includes(query)
+        normalizeSearchTerm(val).includes(query)
       );
       return nameMatch || descMatch || specsMatch;
     });
   }
 
-  // Category filter by slug
+  // Category filter by slug or ID
   if (params.categoria && params.categoria !== "todas") {
-    const cat = CATEGORIES.find((c) => c.slug === params.categoria);
+    const cat = CATEGORIES.find(
+      (c) => c.slug === params.categoria || c.id === params.categoria
+    );
     if (cat) {
       results = results.filter((p) => p.categoryId === cat.id);
     }
   }
 
-  // Store filter by slug
+  // Store filter by slug or ID
   if (params.loja && params.loja !== "todas") {
-    const store = STORES.find((s) => s.slug === params.loja);
+    const store = STORES.find(
+      (s) => s.slug === params.loja || s.id === params.loja
+    );
     if (store) {
       results = results.filter((p) => p.storeId === store.id);
     }
   }
 
-  // Price range filters
-  if (params.precoMin !== undefined && params.precoMin !== "") {
-    const min = Number(params.precoMin);
-    if (!isNaN(min)) {
-      results = results.filter((p) => p.price >= min);
-    }
+  // Price range filters with inverted range safety check
+  let min =
+    params.precoMin !== undefined && params.precoMin !== ""
+      ? Number(params.precoMin)
+      : NaN;
+  let max =
+    params.precoMax !== undefined && params.precoMax !== ""
+      ? Number(params.precoMax)
+      : NaN;
+
+  if (!isNaN(min) && !isNaN(max) && min > max) {
+    const temp = min;
+    min = max;
+    max = temp;
   }
 
-  if (params.precoMax !== undefined && params.precoMax !== "") {
-    const max = Number(params.precoMax);
-    if (!isNaN(max)) {
-      results = results.filter((p) => p.price <= max);
-    }
+  if (!isNaN(min) && min >= 0) {
+    results = results.filter((p) => p.price >= min);
+  }
+
+  if (!isNaN(max) && max >= 0) {
+    results = results.filter((p) => p.price <= max);
   }
 
   // Availability filter
@@ -160,8 +190,12 @@ function filterProductsCore(params: ProductSearchParams): Product[] {
       break;
     case "relevantes":
     default:
-      // Sort by rating and sales
-      results.sort((a, b) => b.rating * b.soldCount - a.rating * a.soldCount);
+      // Sort by weighted rating and sales volume
+      results.sort((a, b) => {
+        const scoreB = b.rating * 10 + b.soldCount;
+        const scoreA = a.rating * 10 + a.soldCount;
+        return scoreB - scoreA;
+      });
       break;
   }
 

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Search, Sparkles, ChevronRight, X } from "lucide-react";
 import { CATEGORIES } from "@/data/categories";
 import { PRODUCTS } from "@/data/products";
+import { normalizeSearchTerm } from "@/lib/products";
 import { formatBRL } from "@/lib/format";
 
 interface HeaderSearchProps {
@@ -41,15 +42,16 @@ export function HeaderSearch({ initialQuery = "", className }: HeaderSearchProps
     }
   };
 
-  // Live matching products (up to 3) when typing - memoized for performance
+  // Live matching products (up to 3) when typing - memoized and accent-insensitive
   const liveResults = useMemo(() => {
-    const trimmed = query.trim().toLowerCase();
+    const trimmed = normalizeSearchTerm(query);
     if (trimmed.length < 2) return [];
 
-    return PRODUCTS.filter((p) =>
-      p.name.toLowerCase().includes(trimmed) ||
-      p.description.toLowerCase().includes(trimmed)
-    ).slice(0, 3);
+    return PRODUCTS.filter((p) => {
+      const nameMatch = normalizeSearchTerm(p.name).includes(trimmed);
+      const descMatch = normalizeSearchTerm(p.description).includes(trimmed);
+      return nameMatch || descMatch;
+    }).slice(0, 3);
   }, [query]);
 
   const popularTerms = ["Capacete Pro Carbon", "Bota Trilha", "Escapamento", "Pneu Borracha"];

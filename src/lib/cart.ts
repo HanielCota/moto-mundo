@@ -14,10 +14,11 @@ export function groupCartByStore(items: CartItem[]): StoreCartGroup[] {
 
   storeMap.forEach((storeItems, storeId) => {
     const storeName = storeItems[0]?.storeName || "Loja";
-    const subtotal = storeItems.reduce(
+    const rawSubtotal = storeItems.reduce(
       (sum, item) => sum + item.unitPrice * item.quantity,
       0
     );
+    const subtotal = Math.round(rawSubtotal * 100) / 100;
     const allFreeShipping = storeItems.every((item) => item.freeShipping);
     const shippingCost = calculateStoreDefaultShipping(storeItems);
 
@@ -48,28 +49,30 @@ export function calculateCartTotals(
     };
   }
 
-  const subtotal = items.reduce(
+  const rawSubtotal = items.reduce(
     (sum, item) => sum + item.unitPrice * item.quantity,
     0
   );
+  const subtotal = Math.round(rawSubtotal * 100) / 100;
 
   const itemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const groups = groupCartByStore(items);
 
-  let shippingTotal = 0;
+  let rawShippingTotal = 0;
   groups.forEach((group) => {
     if (
       customShippingByStore &&
       typeof customShippingByStore[group.storeId] === "number"
     ) {
-      shippingTotal += customShippingByStore[group.storeId];
+      rawShippingTotal += customShippingByStore[group.storeId];
     } else {
-      shippingTotal += group.shippingCost;
+      rawShippingTotal += group.shippingCost;
     }
   });
+  const shippingTotal = Math.round(rawShippingTotal * 100) / 100;
 
-  const total = subtotal + shippingTotal;
+  const total = Math.round((subtotal + shippingTotal) * 100) / 100;
 
   return {
     subtotal,

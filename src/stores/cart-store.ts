@@ -26,8 +26,17 @@ export const useCartStore = create<CartState>()(
           return { success: false, message: "Produto indisponível em estoque." };
         }
 
+        const qtyToAdd = Math.max(1, Math.floor(quantityToAdd));
+
         if (existing) {
-          const newQty = existing.quantity + quantityToAdd;
+          if (existing.quantity >= itemData.stock) {
+            return {
+              success: false,
+              message: `Limite de estoque atingido (${itemData.stock} un.). Você já possui todas as unidades disponíveis no carrinho.`,
+            };
+          }
+
+          const newQty = existing.quantity + qtyToAdd;
           if (newQty > itemData.stock) {
             // Clamp to max stock
             set({
@@ -39,7 +48,7 @@ export const useCartStore = create<CartState>()(
             });
             return {
               success: true,
-              message: `Limite de estoque atingido (${itemData.stock} un.). Quantidade ajustada.`,
+              message: `Limite de estoque atingido (${itemData.stock} un.). Quantidade ajustada para o máximo disponível.`,
             };
           }
 
@@ -54,7 +63,7 @@ export const useCartStore = create<CartState>()(
         }
 
         // New item
-        const clampedQty = Math.min(Math.max(1, quantityToAdd), itemData.stock);
+        const clampedQty = Math.min(qtyToAdd, itemData.stock);
         set({
           items: [
             ...items,
@@ -74,15 +83,20 @@ export const useCartStore = create<CartState>()(
       },
 
       updateQuantity: (productId: string, quantity: number) => {
+        const cleanQty = Math.floor(quantity);
+        if (cleanQty <= 0) {
+          set((state) => ({
+            items: state.items.filter((i) => i.productId !== productId),
+          }));
+          return;
+        }
+
         set((state) => ({
-          items: state.items
-            .map((item) => {
-              if (item.productId !== productId) return item;
-              // Clamp between 1 and item.stock
-              const clamped = Math.min(Math.max(1, quantity), item.stock);
-              return { ...item, quantity: clamped };
-            })
-            .filter((item) => item.quantity > 0),
+          items: state.items.map((item) => {
+            if (item.productId !== productId) return item;
+            const clamped = Math.min(cleanQty, item.stock);
+            return { ...item, quantity: clamped };
+          }),
         }));
       },
 
