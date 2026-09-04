@@ -43,7 +43,7 @@ export function BrandCard({ brand }: BrandCardProps) {
                 fill
                 sizes="64px"
                 unoptimized
-                className="object-cover"
+                className="object-contain p-0.5"
               />
             </div>
             <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">

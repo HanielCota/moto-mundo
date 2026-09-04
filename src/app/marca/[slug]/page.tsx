@@ -79,7 +79,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
                   fill
                   sizes="96px"
                   unoptimized
-                  className="object-cover"
+                  className="object-contain p-1"
                 />
               </div>
 
