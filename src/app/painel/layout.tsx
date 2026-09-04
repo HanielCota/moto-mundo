@@ -3,7 +3,8 @@ import { PainelShell } from "@/components/painel/painel-shell";
 
 export const metadata: Metadata = {
   title: "Painel do lojista",
-  description: "Cadastre produtos, preço, estoque e fotos da sua loja no Moto Mundo.",
+  description:
+    "Faturamento, onde está cada produto, rotas de entrega e cadastro do estoque da loja.",
 };
 
 export default function PainelLayout({

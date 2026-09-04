@@ -6,7 +6,12 @@ import { toast } from "sonner";
 import { useSellerCatalog } from "@/hooks/use-seller-catalog";
 import { formatBRL } from "@/lib/format";
 import { getStoreByIdSync, getCategoryByIdSync } from "@/lib/products";
-import { Pencil, Plus, Trash2, Package } from "lucide-react";
+import {
+  formatStoreAddress,
+  locateProduct,
+  STOCK_PLACE_LABEL,
+} from "@/lib/seller-dashboard";
+import { Pencil, Plus, Trash2, Package, MapPin } from "lucide-react";
 
 export function ProductList() {
   const { products, isHydrated, removeProduct } = useSellerCatalog();
@@ -59,6 +64,7 @@ export function ProductList() {
           {products.map((product) => {
             const store = getStoreByIdSync(product.storeId);
             const category = getCategoryByIdSync(product.categoryId);
+            const location = locateProduct(product);
             return (
               <li
                 key={product.id}
@@ -80,6 +86,12 @@ export function ProductList() {
                   <p className="text-[11px] text-zinc-500 truncate">
                     {store?.name} · {category?.name} · {product.brand}
                   </p>
+                  {store ? (
+                    <p className="text-[11px] text-zinc-500 truncate mt-0.5 flex items-center gap-1">
+                      <MapPin className="size-3 shrink-0 text-zinc-400" />
+                      {STOCK_PLACE_LABEL[location.place]} · {formatStoreAddress(store)}
+                    </p>
+                  ) : null}
                   <p className="text-xs font-bold text-orange-600 mt-0.5">
                     {formatBRL(product.price)} · {product.stock} un.
                   </p>

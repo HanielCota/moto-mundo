@@ -11,8 +11,36 @@ const NAV = [
   { href: "/painel/produtos/novo", label: "Cadastrar produto", icon: Plus, exact: true },
 ] as const;
 
+function headingFor(pathname: string): { title: string; description: string } {
+  if (pathname === "/painel/produtos/novo") {
+    return {
+      title: "Cadastrar produto",
+      description:
+        "Sobe o que tem no balcão: nome, preço, estoque, fotos e tamanho. O item entra na vitrine da loja.",
+    };
+  }
+  if (pathname.startsWith("/painel/produtos/") && pathname !== "/painel/produtos") {
+    return {
+      title: "Editar produto",
+      description: "Atualiza preço, estoque, fotos e o restante do item.",
+    };
+  }
+  if (pathname === "/painel/produtos") {
+    return {
+      title: "Meus produtos",
+      description: "Itens cadastrados no painel, com a loja física onde cada um está.",
+    };
+  }
+  return {
+    title: "Visão da loja",
+    description:
+      "Faturamento, onde está cada produto e as rotas de entrega. Os valores são de demonstração.",
+  };
+}
+
 export function PainelShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const heading = headingFor(pathname);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -21,11 +49,10 @@ export function PainelShell({ children }: { children: React.ReactNode }) {
           Painel do lojista
         </p>
         <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight">
-          Cadastro de produtos
+          {heading.title}
         </h1>
         <p className="text-sm text-zinc-600 mt-1 max-w-2xl">
-          Aqui a loja sobe o que tem no balcão: nome, preço, estoque, fotos,
-          tamanho e o resto. O item entra na vitrine da loja.
+          {heading.description}
         </p>
       </div>
 
