@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <defs>
+    <linearGradient id="motoOrangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5500" />
+      <stop offset="100%" stop-color="#EA580C" />
+    </linearGradient>
+  </defs>
+
+  <!-- Smooth rounded squircle -->
+  <rect x="2" y="2" width="44" height="44" rx="13" fill="url(#motoOrangeGrad)" />
+
+  <!-- Subtle top-light rim -->
+  <path d="M 14 3.5 L 34 3.5 C 41 3.5 44.5 7 44.5 14 L 44.5 15.5 C 44.5 8 40 5 33 5 L 15 5 C 8 5 3.5 8 3.5 15.5 L 3.5 14 C 3.5 7 7 3.5 14 3.5 Z" fill="#FFFFFF" fill-opacity="0.22" />
+
+  <!-- Clean, bold minimalist M -->
+  <path d="M 12 35.5 L 12 12.5 L 18.5 12.5 L 24 23 L 29.5 12.5 L 36 12.5 L 36 35.5 L 30.5 35.5 L 30.5 20.5 L 25.5 30 L 22.5 30 L 17.5 20.5 L 17.5 35.5 Z" fill="#FFFFFF" />
+</svg>

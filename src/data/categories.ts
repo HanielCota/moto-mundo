@@ -1,0 +1,68 @@
+import { Category } from "@/types";
+
+export const CATEGORIES: Category[] = [
+  {
+    id: "cat-capacetes",
+    slug: "capacetes",
+    name: "Capacetes",
+    description: "Capacetes leves e ventilados com proteção avançada contra impactos para motocross e trilhas.",
+    iconName: "HardHat",
+    imageUrl: "/images/products/capacete-1.jpg",
+  },
+  {
+    id: "cat-botas",
+    slug: "botas",
+    name: "Botas",
+    description: "Botas articuladas com travas metálicas para máxima aderência e proteção de tornozelo.",
+    iconName: "Footprints",
+    imageUrl: "/images/products/bota-1.jpg",
+  },
+  {
+    id: "cat-protecoes",
+    slug: "protecoes",
+    name: "Proteções",
+    description: "Coletes integrais, joelheiras articuladas, cotoveleiras e protetores de pescoço.",
+    iconName: "ShieldCheck",
+    imageUrl: "/images/products/colete.jpg",
+  },
+  {
+    id: "cat-vestuario",
+    slug: "vestuario",
+    name: "Vestuário",
+    description: "Camisas sublimadas, calças reforçadas com elastano, luvas aderentes e capas de chuva.",
+    iconName: "Shirt",
+    imageUrl: "/images/products/conjunto.jpg",
+  },
+  {
+    id: "cat-pneus",
+    slug: "pneus",
+    name: "Pneus",
+    description: "Pneus de alta tração com cravos para terrenos arenosos, lamaçais, pedras e terra batida.",
+    iconName: "Disc",
+    imageUrl: "/images/products/pneu.jpg",
+  },
+  {
+    id: "cat-guidoes",
+    slug: "guidoes",
+    name: "Guidões",
+    description: "Guidões de alumínio aeronáutico, adaptadores, espumas protetoras e manoplas antiderrapantes.",
+    iconName: "Navigation",
+    imageUrl: "/images/products/guidao.jpg",
+  },
+  {
+    id: "cat-escapamentos",
+    slug: "escapamentos",
+    name: "Escapamentos",
+    description: "Curvas de escape em inox, ponteiras em alumínio e sistemas completos para ganho de torque.",
+    iconName: "Flame",
+    imageUrl: "/images/products/escapamento.jpg",
+  },
+  {
+    id: "cat-pecas-de-motor",
+    slug: "pecas-de-motor",
+    name: "Peças de Motor",
+    description: "Pistões forjados, cilindros, bielas, kits de embreagem, discos de freio e filtros de ar laváveis.",
+    iconName: "Cpu",
+    imageUrl: "/images/products/motor.jpg",
+  },
+];
