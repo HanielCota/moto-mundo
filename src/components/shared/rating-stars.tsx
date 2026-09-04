@@ -28,9 +28,16 @@ export function RatingStars({
     lg: "text-base font-medium",
   };
 
+  const labelText = `Avaliação: ${rating.toFixed(1)} de 5 estrelas${
+    ratingCount !== undefined ? `, com base em ${ratingCount} avaliações` : ""
+  }`;
+
   return (
-    <div className={cn("inline-flex items-center gap-1.5", className)}>
-      <div className="flex items-center text-amber-500">
+    <div
+      className={cn("inline-flex items-center gap-1.5", className)}
+      aria-label={labelText}
+    >
+      <div className="flex items-center text-amber-500" aria-hidden="true">
         {[1, 2, 3, 4, 5].map((starIndex) => {
           const isFilled = rating >= starIndex;
           const isHalf = !isFilled && rating >= starIndex - 0.5;

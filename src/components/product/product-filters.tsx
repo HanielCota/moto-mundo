@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CATEGORIES } from "@/data/categories";
 import { STORES } from "@/data/stores";
 import { RotateCcw } from "lucide-react";
@@ -26,14 +26,18 @@ export function ProductFilters({
   onFilterChange,
   onReset,
 }: ProductFiltersProps) {
+  const [prevPrecoMin, setPrevPrecoMin] = useState(filters.precoMin);
+  const [prevPrecoMax, setPrevPrecoMax] = useState(filters.precoMax);
   const [minPriceInput, setMinPriceInput] = useState(filters.precoMin);
   const [maxPriceInput, setMaxPriceInput] = useState(filters.precoMax);
 
-  // Sync inputs if URL params or active chips change from parent
-  useEffect(() => {
+  // Adjust state during render when props change (idiomatic React without useEffect)
+  if (filters.precoMin !== prevPrecoMin || filters.precoMax !== prevPrecoMax) {
+    setPrevPrecoMin(filters.precoMin);
+    setPrevPrecoMax(filters.precoMax);
     setMinPriceInput(filters.precoMin || "");
     setMaxPriceInput(filters.precoMax || "");
-  }, [filters.precoMin, filters.precoMax]);
+  }
 
   const handlePriceApply = (e: React.FormEvent) => {
     e.preventDefault();

@@ -88,7 +88,6 @@ export function CheckoutView() {
   // Watch key fields via useWatch
   const currentPaymentMethod = useWatch({ control, name: "paymentMethod" }) || "pix";
   const currentShippingSelections = useWatch({ control, name: "shippingSelections" }) || initialShippingSelections;
-  const currentCep = useWatch({ control, name: "cep" }) || "";
 
   // Redirect if cart is empty after hydration
   useEffect(() => {

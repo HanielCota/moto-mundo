@@ -57,14 +57,22 @@ function FacebookIcon({ className = "w-4 h-4" }: { className?: string }) {
 export function Footer() {
   const [copiedCoupon, setCopiedCoupon] = useState(false);
 
-  const handleCopyCoupon = () => {
-    navigator.clipboard.writeText("PRIMEIRA10");
-    setCopiedCoupon(true);
-    toast.success("Cupom PRIMEIRA10 copiado!", {
-      description: "Aproveite 10% de desconto na sua primeira compra.",
-      icon: <Sparkles className="w-5 h-5 text-orange-500" />,
-    });
-    setTimeout(() => setCopiedCoupon(false), 3000);
+  const handleCopyCoupon = async () => {
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText("PRIMEIRA10");
+        setCopiedCoupon(true);
+        toast.success("Cupom PRIMEIRA10 copiado!", {
+          description: "Aproveite 10% de desconto na sua primeira compra.",
+          icon: <Sparkles className="w-5 h-5 text-orange-500" />,
+        });
+        setTimeout(() => setCopiedCoupon(false), 3000);
+      } else {
+        toast.info("Cupom: PRIMEIRA10");
+      }
+    } catch {
+      toast.info("Cupom: PRIMEIRA10");
+    }
   };
 
   const scrollToTop = () => {

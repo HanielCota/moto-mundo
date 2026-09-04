@@ -14,7 +14,10 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://motomundo.com.br"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://moto-mundo.vercel.app")
+  ),
   title: {
     default: "Moto Mundo | Marketplace de Peças e Equipamentos Off-Road",
     template: "%s | Moto Mundo",

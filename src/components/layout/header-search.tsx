@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useId } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,6 +20,7 @@ export function HeaderSearch({ initialQuery = "", className }: HeaderSearchProps
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const searchInputId = useId();
 
   // Close on click outside
   useEffect(() => {
@@ -60,11 +61,11 @@ export function HeaderSearch({ initialQuery = "", className }: HeaderSearchProps
     <div ref={containerRef} className={className || "relative w-full max-w-lg"}>
       <form onSubmit={handleSearch} role="search" className="relative w-full">
         <div className="relative flex items-center w-full">
-          <label htmlFor="header-search-input" className="sr-only">
+          <label htmlFor={searchInputId} className="sr-only">
             Buscar no Moto Mundo
           </label>
           <input
-            id="header-search-input"
+            id={searchInputId}
             type="search"
             value={query}
             onChange={(e) => {
