@@ -38,6 +38,28 @@ export async function getAllBrands(): Promise<Brand[]> {
   return BRANDS;
 }
 
+export async function getBrandBySlug(slug: string): Promise<Brand | undefined> {
+  return BRANDS.find(
+    (brand) =>
+      brand.slug === slug ||
+      normalizeSearchTerm(brand.name) === normalizeSearchTerm(slug)
+  );
+}
+
+export async function getProductsByBrand(brandSlug: string): Promise<Product[]> {
+  const brand = await getBrandBySlug(brandSlug);
+  if (!brand) return [];
+  return PRODUCTS.filter((product) => {
+    const slugMatch =
+      product.brandSlug &&
+      normalizeSearchTerm(product.brandSlug) === normalizeSearchTerm(brand.slug);
+    const nameMatch =
+      product.brand &&
+      normalizeSearchTerm(product.brand) === normalizeSearchTerm(brand.name);
+    return slugMatch || nameMatch;
+  });
+}
+
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
   return PRODUCTS.find((p) => p.slug === slug);
@@ -267,11 +289,33 @@ export function getCategoryByIdSync(id: string): Category | undefined {
 }
 
 export function getBrandBySlugSync(slug: string): Brand | undefined {
-  return BRANDS.find((b) => b.slug === slug || normalizeSearchTerm(b.name) === normalizeSearchTerm(slug));
+  return BRANDS.find(
+    (brand) =>
+      brand.slug === slug ||
+      normalizeSearchTerm(brand.name) === normalizeSearchTerm(slug)
+  );
 }
 
 export function getAllBrandsSync(): Brand[] {
   return BRANDS;
+}
+
+export function getProductByIdSync(id: string): Product | undefined {
+  return PRODUCTS.find((product) => product.id === id);
+}
+
+export function getProductsByBrandSync(brandSlug: string): Product[] {
+  const brand = getBrandBySlugSync(brandSlug);
+  if (!brand) return [];
+  return PRODUCTS.filter((product) => {
+    const slugMatch =
+      product.brandSlug &&
+      normalizeSearchTerm(product.brandSlug) === normalizeSearchTerm(brand.slug);
+    const nameMatch =
+      product.brand &&
+      normalizeSearchTerm(product.brand) === normalizeSearchTerm(brand.name);
+    return slugMatch || nameMatch;
+  });
 }
 
 export function getStoreBySlugSync(slug: string): Store | undefined {

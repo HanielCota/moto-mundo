@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { PRODUCTS } from "@/data/products";
 import { STORES } from "@/data/stores";
 import { CATEGORIES } from "@/data/categories";
+import { BRANDS } from "@/data/brands";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl =
@@ -28,6 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/marcas`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/carrinho`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -49,6 +56,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const brandRoutes: MetadataRoute.Sitemap = BRANDS.map((brand) => ({
+    url: `${baseUrl}/marca/${brand.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
   const categoryRoutes: MetadataRoute.Sitemap = CATEGORIES.map((category) => ({
     url: `${baseUrl}/produtos?categoria=${category.slug}`,
     lastModified: new Date(),
@@ -56,5 +70,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...productRoutes, ...storeRoutes, ...categoryRoutes];
+  return [
+    ...staticRoutes,
+    ...productRoutes,
+    ...storeRoutes,
+    ...brandRoutes,
+    ...categoryRoutes,
+  ];
 }

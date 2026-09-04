@@ -13,4 +13,6 @@ export interface Store {
   pickupAvailable: boolean;
   shippingPolicy: string;
   returnPolicy: string;
+  instagram?: string;
+  whatsapp?: string;
 }

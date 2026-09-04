@@ -3,7 +3,9 @@ import { HeaderSearch } from "./header-search";
 import { CartBadge } from "./cart-badge";
 import { MobileNav } from "./mobile-nav";
 import { LogoLink } from "./logo";
+import { UserMenu } from "./user-menu";
 import { CATEGORIES } from "@/data/categories";
+import { SITE_SOCIAL } from "@/data/social";
 import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
 
 export function Header() {
@@ -27,7 +29,7 @@ export function Header() {
           {/* Redes Sociais: Instagram & WhatsApp */}
           <div className="flex items-center gap-4 text-xs font-semibold text-zinc-400">
             <a
-              href="https://instagram.com/motomundo.br"
+              href={SITE_SOCIAL.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
@@ -37,7 +39,7 @@ export function Header() {
             </a>
             <span className="text-zinc-700">|</span>
             <a
-              href="https://wa.me/5531998765432"
+              href={SITE_SOCIAL.whatsappMessageUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
@@ -76,6 +78,12 @@ export function Header() {
                 Produtos
               </Link>
               <Link
+                href="/marcas"
+                className="px-3 py-2 rounded-md text-sm font-semibold text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 transition-colors"
+              >
+                Marcas
+              </Link>
+              <Link
                 href="/lojas"
                 className="px-3 py-2 rounded-md text-sm font-semibold text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 transition-colors"
               >
@@ -85,6 +93,7 @@ export function Header() {
 
             <div className="h-6 w-px bg-zinc-200 hidden lg:block mx-1" />
 
+            <UserMenu />
             <CartBadge />
           </div>
         </div>

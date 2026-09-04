@@ -8,6 +8,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { checkoutSchema, CheckoutSchemaType } from "@/lib/checkout-schema";
 import { useCart } from "@/hooks/use-cart";
+import { useAuth } from "@/hooks/use-auth";
 import { groupCartByStore, calculateCartTotals } from "@/lib/cart";
 import { formatBRL, calculateInstallments } from "@/lib/format";
 import { formatCPF, formatPhone, formatCEP, formatCardNumber, formatExpiryDate } from "@/lib/cpf";
@@ -39,7 +40,9 @@ function generateOrderCode(): string {
 export function CheckoutView() {
   const router = useRouter();
   const { items, isHydrated, clearCart } = useCart();
+  const { currentUser, saveOrder } = useAuth();
   const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
+  const [filledUserId, setFilledUserId] = useState<string | null>(null);
 
   // Group items by store
   const storeGroups = useMemo(() => groupCartByStore(items), [items]);
@@ -84,6 +87,24 @@ export function CheckoutView() {
       installments: 1,
     },
   });
+
+  if (currentUser && filledUserId !== currentUser.id) {
+    setFilledUserId(currentUser.id);
+    setValue("fullName", currentUser.fullName);
+    setValue("email", currentUser.email);
+    setValue("phone", currentUser.phone);
+    if (currentUser.cpf) setValue("cpf", currentUser.cpf);
+    const defaultAddress = currentUser.addresses.find((item) => item.isDefault);
+    if (defaultAddress) {
+      setValue("cep", defaultAddress.cep);
+      setValue("street", defaultAddress.street);
+      setValue("number", defaultAddress.number);
+      setValue("complement", defaultAddress.complement || "");
+      setValue("neighborhood", defaultAddress.neighborhood);
+      setValue("city", defaultAddress.city);
+      setValue("state", defaultAddress.state);
+    }
+  }
 
   // Watch key fields via useWatch
   const currentPaymentMethod = useWatch({ control, name: "paymentMethod" }) || "pix";
@@ -220,6 +241,7 @@ export function CheckoutView() {
 
     // Save to sessionStorage (DO NOT store sensitive card data)
     sessionStorage.setItem("moto-mundo-last-order", JSON.stringify(newOrder));
+    saveOrder(newOrder);
 
     // Clear cart
     clearCart();
@@ -259,6 +281,20 @@ export function CheckoutView() {
           <span>Checkout Simulado 100% Seguro</span>
         </div>
       </div>
+
+      {!currentUser ? (
+        <div className="mb-6 p-4 rounded-xl bg-orange-50 border border-orange-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <p className="text-xs text-orange-950">
+            Entre na sua conta para preencher os dados automaticamente e acompanhar o pedido no perfil.
+          </p>
+          <Link
+            href="/login?next=/checkout"
+            className="inline-flex items-center justify-center h-9 px-4 rounded-lg bg-zinc-950 text-white text-xs font-bold shrink-0"
+          >
+            Entrar
+          </Link>
+        </div>
+      ) : null}
 
       {/* Main Checkout Form */}
       <form onSubmit={handleSubmit(onSubmit)} noValidate>

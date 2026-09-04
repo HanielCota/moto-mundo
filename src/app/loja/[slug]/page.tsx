@@ -19,6 +19,7 @@ import {
   CheckCircle,
   Tag,
 } from "lucide-react";
+import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
 
 interface StorePageProps {
   params: Promise<{ slug: string }>;
@@ -131,21 +132,47 @@ export default async function StoreProfilePage({ params }: StorePageProps) {
               </div>
             </div>
 
-            {store.pickupAvailable && (
-              <div className="bg-zinc-50 border border-zinc-200 p-3 rounded-xl flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
-                  <CheckCircle className="w-4 h-4" />
+            <div className="flex flex-col items-stretch sm:items-end gap-2">
+              {store.pickupAvailable && (
+                <div className="bg-zinc-50 border border-zinc-200 p-3 rounded-xl flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
+                    <CheckCircle className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-zinc-900 block">
+                      Retirada Balcão Disponível
+                    </span>
+                    <span className="text-[11px] text-zinc-500">
+                      Retire em {store.city}/{store.state} em até 1 dia útil
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-xs font-bold text-zinc-900 block">
-                    Retirada Balcão Disponível
-                  </span>
-                  <span className="text-[11px] text-zinc-500">
-                    Retire em {store.city}/{store.state} em até 1 dia útil
-                  </span>
-                </div>
+              )}
+              <div className="flex items-center gap-2">
+                {store.instagram ? (
+                  <a
+                    href={store.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-zinc-200 text-[11px] font-bold text-zinc-700 hover:text-pink-600 hover:border-pink-300"
+                  >
+                    <InstagramIcon className="size-3.5 text-pink-500" />
+                    Instagram
+                  </a>
+                ) : null}
+                {store.whatsapp ? (
+                  <a
+                    href={store.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-emerald-200 bg-emerald-50 text-[11px] font-bold text-emerald-800 hover:bg-emerald-100"
+                  >
+                    <WhatsAppIcon className="size-3.5 text-emerald-500" />
+                    WhatsApp
+                  </a>
+                ) : null}
               </div>
-            )}
+            </div>
           </div>
 
           <p className="mt-6 text-sm text-zinc-600 leading-relaxed max-w-4xl pt-4 border-t border-zinc-100">

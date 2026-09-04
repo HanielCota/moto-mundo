@@ -19,6 +19,8 @@ export const STORES: Store[] = [
       "Envios despachados em até 24h úteis para todo o Brasil com código de rastreamento direto no e-mail.",
     returnPolicy:
       "Garantia de 90 dias e devolução gratuita em até 7 dias corridos após o recebimento da mercadoria.",
+    instagram: "https://instagram.com/edgarracing.mx",
+    whatsapp: "https://wa.me/5531987654321",
   },
   {
     id: "store-america-racing",
@@ -38,6 +40,8 @@ export const STORES: Store[] = [
       "Embalagens reforçadas para peças pesadas e entrega expressa via transportadora com seguro total.",
     returnPolicy:
       "Trocas de tamanho sem custo em vestuário e devolução facilitada em até 7 dias.",
+    instagram: "https://instagram.com/americaracing.br",
+    whatsapp: "https://wa.me/5519987654321",
   },
   {
     id: "store-gringa-mx",
@@ -57,6 +61,8 @@ export const STORES: Store[] = [
       "Coleta diária pelas melhores transportadoras do país. Rastreio em tempo real atualizado a cada etapa.",
     returnPolicy:
       "Garantia estendida do fabricante e troca ágil de numeração de botas e capacetes.",
+    instagram: "https://instagram.com/gringamx",
+    whatsapp: "https://wa.me/5541987654321",
   },
   {
     id: "store-moto-braga",
@@ -76,6 +82,8 @@ export const STORES: Store[] = [
       "Despacho prioritário para borracharias e oficinas, com frete econômico competitivo para todo o Sul e Sudeste.",
     returnPolicy:
       "Garantia de fábrica contra defeitos de fabricação em borrachas e componentes mecânicos.",
+    instagram: "https://instagram.com/motobraga.offroad",
+    whatsapp: "https://wa.me/5549998877665",
   },
   {
     id: "store-off-road-store",
@@ -95,5 +103,7 @@ export const STORES: Store[] = [
       "Postagem ágil e logística integrada com as principais plataformas nacionais de entrega rápida.",
     returnPolicy:
       "Suporte técnico especializado para dúvidas de compatibilidade e devolução garantida.",
+    instagram: "https://instagram.com/offroadstore.br",
+    whatsapp: "https://wa.me/5516987654321",
   },
 ];

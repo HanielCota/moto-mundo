@@ -3,7 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, Search, ShoppingBag, Store, Tag, Sparkles, ChevronRight, Compass } from "lucide-react";
+import { Menu, Search, ShoppingBag, Store, Tag, Sparkles, ChevronRight, Compass, UserRound, BadgeCheck } from "lucide-react";
+import { SITE_SOCIAL } from "@/data/social";
+import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
+import { useAuth } from "@/hooks/use-auth";
 import {
   Sheet,
   SheetContent,
@@ -13,12 +16,14 @@ import {
 } from "@/components/ui/sheet";
 import { CATEGORIES } from "@/data/categories";
 import { STORES } from "@/data/stores";
+import { getOemBrands } from "@/data/brands";
 import { Logo } from "./logo";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+  const { currentUser, isHydrated } = useAuth();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,6 +78,17 @@ export function MobileNav() {
             Início
           </Link>
           <Link
+            href={isHydrated && currentUser ? "/perfil" : "/login"}
+            onClick={handleLinkClick}
+            className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 hover:bg-zinc-100 transition-colors"
+          >
+            <span className="flex items-center gap-3">
+              <UserRound className="w-4 h-4 text-orange-600" />
+              {isHydrated && currentUser ? "Meu perfil" : "Entrar / Cadastrar"}
+            </span>
+            <ChevronRight className="w-4 h-4 text-zinc-400" />
+          </Link>
+          <Link
             href="/produtos"
             onClick={handleLinkClick}
             className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 hover:bg-zinc-100 transition-colors"
@@ -80,6 +96,17 @@ export function MobileNav() {
             <span className="flex items-center gap-3">
               <Tag className="w-4 h-4 text-orange-600" />
               Todos os Produtos
+            </span>
+            <ChevronRight className="w-4 h-4 text-zinc-400" />
+          </Link>
+          <Link
+            href="/marcas"
+            onClick={handleLinkClick}
+            className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 hover:bg-zinc-100 transition-colors"
+          >
+            <span className="flex items-center gap-3">
+              <BadgeCheck className="w-4 h-4 text-orange-600" />
+              Marcas
             </span>
             <ChevronRight className="w-4 h-4 text-zinc-400" />
           </Link>
@@ -125,6 +152,32 @@ export function MobileNav() {
           </div>
         </div>
 
+        <div className="p-4 border-b border-zinc-100">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 px-3 mb-2">
+            Marcas oficiais
+          </h4>
+          <div className="grid grid-cols-1 gap-1">
+            {getOemBrands().map((brand) => (
+              <Link
+                key={brand.id}
+                href={`/marca/${brand.slug}`}
+                onClick={handleLinkClick}
+                className="flex items-center justify-between px-3 py-2 text-xs font-medium text-zinc-700 hover:text-orange-600 hover:bg-zinc-50 rounded-md transition-colors"
+              >
+                <span>{brand.name}</span>
+                <span className="text-[11px] text-zinc-400">{brand.origin}</span>
+              </Link>
+            ))}
+            <Link
+              href="/marcas"
+              onClick={handleLinkClick}
+              className="px-3 py-2 text-xs font-bold text-orange-600"
+            >
+              Ver todas as marcas
+            </Link>
+          </div>
+        </div>
+
         {/* Stores Section */}
         <div className="p-4 border-b border-zinc-100">
           <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 px-3 mb-2">
@@ -152,19 +205,21 @@ export function MobileNav() {
           </h4>
           <div className="grid grid-cols-2 gap-2 px-1">
             <a
-              href="https://instagram.com/motomundo.br"
+              href={SITE_SOCIAL.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white border border-zinc-200 text-xs font-bold text-zinc-800 hover:text-pink-600 hover:border-pink-300 transition-all shadow-xs"
             >
+              <InstagramIcon className="size-3.5 text-pink-500" />
               <span>Instagram</span>
             </a>
             <a
-              href="https://wa.me/5531998765432"
+              href={SITE_SOCIAL.whatsappMessageUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-all shadow-xs"
             >
+              <WhatsAppIcon className="size-3.5 text-emerald-500" />
               <span>WhatsApp</span>
             </a>
           </div>

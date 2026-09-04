@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import { CATEGORIES } from "@/data/categories";
 import { STORES } from "@/data/stores";
+import { getOemBrands } from "@/data/brands";
+import { SITE_SOCIAL } from "@/data/social";
 import { toast } from "sonner";
 import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
 
@@ -206,7 +208,7 @@ export function Footer() {
             {/* Direct Contact Cards */}
             <div className="space-y-2.5 text-xs">
               <a
-                href="https://wa.me/5531998765432"
+                href={SITE_SOCIAL.whatsappMessageUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-3 py-2 rounded-xl bg-zinc-900/60 border border-zinc-800 text-zinc-300 hover:text-white hover:border-emerald-500/40 hover:bg-zinc-900 transition-all w-full max-w-xs group"
@@ -216,7 +218,7 @@ export function Footer() {
                 </div>
                 <div className="flex-1 flex items-center justify-between">
                   <span className="font-semibold text-zinc-200">WhatsApp Oficial:</span>
-                  <span className="text-emerald-400 font-mono font-medium">(31) 99876-5432</span>
+                  <span className="text-emerald-400 font-mono font-medium">{SITE_SOCIAL.whatsappDisplay}</span>
                 </div>
               </a>
 
@@ -246,7 +248,7 @@ export function Footer() {
               </span>
               <div className="flex items-center gap-2.5">
                 <a
-                  href="https://instagram.com/motomundo.br"
+                  href={SITE_SOCIAL.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram Moto Mundo"
@@ -256,7 +258,7 @@ export function Footer() {
                   <span className="text-xs font-semibold">Instagram</span>
                 </a>
                 <a
-                  href="https://wa.me/5531998765432"
+                  href={SITE_SOCIAL.whatsappMessageUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp Moto Mundo"
@@ -311,14 +313,27 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Lojas Oficiais (2 cols on lg) */}
+          {/* Marcas oficiais + Lojas (2 cols on lg) */}
           <div className="lg:col-span-2 space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2">
-              <span>Lojas Oficiais</span>
+              <span>Marcas Oficiais</span>
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
             </h3>
             <ul className="space-y-2.5 text-xs">
-              {STORES.map((store) => (
+              {getOemBrands().map((brand) => (
+                <li key={brand.id}>
+                  <Link
+                    href={`/marca/${brand.slug}`}
+                    className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 group py-0.5"
+                  >
+                    <CheckCircle2 className="w-3 h-3 text-orange-500/70 shrink-0" />
+                    <span className="group-hover:translate-x-1 transition-transform truncate">
+                      {brand.name}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+              {STORES.slice(0, 3).map((store) => (
                 <li key={store.id}>
                   <Link
                     href={`/loja/${store.slug}`}
@@ -331,7 +346,14 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li className="pt-2">
+              <li className="pt-2 flex flex-col gap-1.5">
+                <Link
+                  href="/marcas"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-400 hover:text-orange-300 transition-colors"
+                >
+                  <span>Ver todas as marcas</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
                 <Link
                   href="/lojas"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-400 hover:text-orange-300 transition-colors"
@@ -350,6 +372,11 @@ export function Footer() {
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
             </h3>
             <ul className="space-y-2.5 text-xs text-zinc-400">
+              <li>
+                <Link href="/perfil" className="hover:text-white transition-colors flex items-center justify-between group">
+                  <span className="group-hover:translate-x-1 transition-transform">Entrar / Minha conta</span>
+                </Link>
+              </li>
               <li>
                 <Link href="/produtos" className="hover:text-white transition-colors flex items-center justify-between group">
                   <span className="group-hover:translate-x-1 transition-transform">Como Comprar no Marketplace</span>

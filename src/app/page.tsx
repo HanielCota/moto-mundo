@@ -1,6 +1,7 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { TrustBar } from "@/components/home/trust-bar";
 import { CategoryGrid } from "@/components/home/category-grid";
+import { BrandsShowcase } from "@/components/home/brands-showcase";
 import { ProductsShowcase } from "@/components/home/products-showcase";
 import { StoresShowcase } from "@/components/home/stores-showcase";
 import { NewsletterSection } from "@/components/home/newsletter-section";
@@ -24,7 +25,10 @@ export default async function HomePage() {
       {/* 3. Navegação Rápida por Linhas / Categorias */}
       <CategoryGrid />
 
-      {/* 4. Vitrine Unificada de Produtos com Abas (Ofertas, Destaques, Mais Vendidos) */}
+      {/* 4. Marcas oficiais (Yamaha, Honda) e especialistas */}
+      <BrandsShowcase />
+
+      {/* 5. Vitrine Unificada de Produtos com Abas (Ofertas, Destaques, Mais Vendidos) */}
       <ProductsShowcase
         deals={deals}
         featured={featured}

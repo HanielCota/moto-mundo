@@ -30,6 +30,12 @@ interface ProductFiltersProps {
 
 const AVAILABLE_SIZES = ["P", "M", "G", "GG", "38", "39", "40", "41", "42", "43", "44", "1L"];
 
+const SORTED_BRANDS = [...BRANDS].sort((a, b) => {
+  if (a.kind === "oem" && b.kind !== "oem") return -1;
+  if (b.kind === "oem" && a.kind !== "oem") return 1;
+  return a.name.localeCompare(b.name, "pt-BR");
+});
+
 export function ProductFilters({
   filters,
   onFilterChange,
@@ -107,7 +113,7 @@ export function ProductFilters({
           >
             Todas as marcas
           </button>
-          {BRANDS.map((b) => {
+          {SORTED_BRANDS.map((b) => {
             const isSelected = filters.marca === b.slug || filters.marca === b.name.toLowerCase();
             return (
               <button

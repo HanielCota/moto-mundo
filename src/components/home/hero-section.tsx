@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Search, ArrowRight, ShieldCheck, Zap, Award } from "lucide-react";
 
 export function HeroSection() {
@@ -21,15 +22,21 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-zinc-950 text-white py-16 md:py-24 border-b border-zinc-800">
       {/* Background Motocross Action Photo with responsive gradient overlays */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-[position:78%_center] sm:bg-center md:bg-[position:82%_center] opacity-50 sm:opacity-60 filter brightness-95 contrast-110"
-        style={{
-          backgroundImage: 'url("/images/hero-motocross.jpg")',
-        }}
-      />
-      {/* Directional gradient: solid dark on the left (for text readability), transparent on the right (to showcase the motocross rider) */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-zinc-950 via-zinc-950/85 to-zinc-950/30" />
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/40" />
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <Image
+          src="/images/hero.png"
+          alt="Motocross Action Jump"
+          fill
+          priority
+          sizes="100vw"
+          quality={90}
+          className="object-cover object-[75%_center] sm:object-center lg:object-[82%_center] opacity-65 md:opacity-80 filter contrast-105"
+        />
+        {/* Directional gradient: solid dark on the left (for text readability), transparent on the right (to showcase the motocross rider) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/85 to-zinc-950/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/40" />
+      </div>
+
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-6">
@@ -82,10 +89,10 @@ export function HeroSection() {
               </Link>
               <span className="text-zinc-600">•</span>
               <Link
-                href="/lojas"
+                href="/marcas"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-400 hover:text-white transition-colors"
               >
-                Conhecer lojas parceiras
+                Yamaha, Honda e marcas
               </Link>
             </div>
           </div>

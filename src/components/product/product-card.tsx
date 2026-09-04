@@ -101,7 +101,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             <div className="flex items-center gap-1.5 truncate">
               {product.brand && (
                 <Link
-                  href={`/produtos?marca=${product.brandSlug || product.brand.toLowerCase()}`}
+                  href={`/marca/${product.brandSlug || product.brand.toLowerCase()}`}
                   className="font-bold text-zinc-950 text-[10px] uppercase tracking-wider bg-zinc-100 hover:bg-orange-100 hover:text-orange-700 px-1.5 py-0.5 rounded transition-colors"
                 >
                   {product.brand}

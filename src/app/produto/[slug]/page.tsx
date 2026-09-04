@@ -105,7 +105,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="flex items-center gap-2">
               {product.brand && (
                 <Link
-                  href={`/produtos?marca=${product.brandSlug || product.brand.toLowerCase()}`}
+                  href={`/marca/${product.brandSlug || product.brand.toLowerCase()}`}
                   className="font-bold text-zinc-900 bg-zinc-100 hover:bg-orange-50 hover:text-orange-600 px-2.5 py-0.5 rounded text-[11px] uppercase tracking-wider transition-colors"
                 >
                   {product.brand}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ShieldCheck, Lock, CreditCard } from "lucide-react";
 import { LogoIcon } from "./logo";
 import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
+import { SITE_SOCIAL } from "@/data/social";
 
 export function MiniFooter() {
   return (
@@ -24,7 +25,7 @@ export function MiniFooter() {
           {/* Social Links: Instagram & WhatsApp */}
           <div className="flex items-center gap-3 text-xs">
             <a
-              href="https://instagram.com/motomundo.br"
+              href={SITE_SOCIAL.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-zinc-600 hover:text-pink-600 font-medium transition-colors"
@@ -34,7 +35,7 @@ export function MiniFooter() {
             </a>
             <span className="text-zinc-300">•</span>
             <a
-              href="https://wa.me/5531998765432"
+              href={SITE_SOCIAL.whatsappMessageUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-zinc-600 hover:text-emerald-600 font-medium transition-colors"
