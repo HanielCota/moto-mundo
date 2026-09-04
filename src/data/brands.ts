@@ -13,8 +13,8 @@ export const BRANDS: Brand[] = [
     kind: "oem",
     origin: "Japão",
     official: true,
-    instagram: "https://instagram.com/yamahamotorbr",
-    whatsapp: "https://wa.me/5531998765432?text=Ol%C3%A1%2C%20quero%20falar%20sobre%20pe%C3%A7as%20Yamaha",
+    instagram: "https://instagram.com/000000",
+    whatsapp: "https://wa.me/00000000000",
   },
   {
     id: "brand-honda",
@@ -28,8 +28,8 @@ export const BRANDS: Brand[] = [
     kind: "oem",
     origin: "Japão",
     official: true,
-    instagram: "https://instagram.com/hondamotosbr",
-    whatsapp: "https://wa.me/5531998765432?text=Ol%C3%A1%2C%20quero%20falar%20sobre%20pe%C3%A7as%20Honda",
+    instagram: "https://instagram.com/000000",
+    whatsapp: "https://wa.me/00000000000",
   },
   {
     id: "brand-alpinestars",
@@ -42,7 +42,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "Itália",
     official: true,
-    instagram: "https://instagram.com/alpinestars",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-bell",
@@ -55,7 +55,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "EUA",
     official: true,
-    instagram: "https://instagram.com/bellhelmets",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-ims",
@@ -68,7 +68,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "Brasil",
     official: true,
-    instagram: "https://instagram.com/imsracing",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-motul",
@@ -81,7 +81,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "França",
     official: true,
-    instagram: "https://instagram.com/motul",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-excel",
@@ -94,7 +94,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "Japão",
     official: true,
-    instagram: "https://instagram.com/excelrims",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-pirelli",
@@ -107,7 +107,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "Itália",
     official: true,
-    instagram: "https://instagram.com/pirelli",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-fox",
@@ -120,7 +120,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "EUA",
     official: true,
-    instagram: "https://instagram.com/foxracing",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-protaper",
@@ -133,7 +133,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "EUA",
     official: true,
-    instagram: "https://instagram.com/protaper",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-fmf",
@@ -146,7 +146,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "EUA",
     official: true,
-    instagram: "https://instagram.com/fmfracing",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-athena",
@@ -159,7 +159,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "Itália",
     official: true,
-    instagram: "https://instagram.com/athenaracing",
+    instagram: "https://instagram.com/000000",
   },
   {
     id: "brand-100",
@@ -172,7 +172,7 @@ export const BRANDS: Brand[] = [
     kind: "specialist",
     origin: "EUA",
     official: true,
-    instagram: "https://instagram.com/ride100percent",
+    instagram: "https://instagram.com/000000",
   },
 ];
 

@@ -17,7 +17,7 @@ const DEMO_USER: UserAccount = {
   id: "user-demo",
   fullName: "Ana Piloto",
   email: "piloto@motomundo.com.br",
-  phone: "(31) 99876-5432",
+  phone: "(00) 00000-0000",
   cpf: "",
   passwordHash: DEMO_PASSWORD_HASH,
   createdAt: "2025-03-12T12:00:00.000Z",

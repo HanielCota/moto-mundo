@@ -100,7 +100,7 @@ export function RegisterForm() {
           <input
             type="tel"
             autoComplete="tel"
-            placeholder="(31) 99999-0000"
+            placeholder="(00) 00000-0000"
             {...register("phone")}
             onChange={(event) => {
               setValue("phone", formatPhone(event.target.value), {
