@@ -38,7 +38,7 @@ export function BackToTop() {
       onClick={scrollToTop}
       aria-label="Voltar ao topo da página"
       className={cn(
-        "fixed bottom-20 lg:bottom-6 right-5 z-30 w-11 h-11 rounded-full bg-zinc-950/85 hover:bg-orange-600 text-white backdrop-blur-md border border-white/20 shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer animate-in fade-in zoom-in-75 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        "fixed bottom-6 right-5 z-30 size-11 rounded-full bg-zinc-950 hover:bg-orange-600 text-white shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer animate-in fade-in zoom-in-75 focus:outline-none focus:ring-2 focus:ring-orange-500"
       )}
     >
       <ArrowUp className="w-5 h-5" />
