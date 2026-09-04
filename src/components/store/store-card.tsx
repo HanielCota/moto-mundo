@@ -63,9 +63,23 @@ export function StoreCard({ store }: StoreCardProps) {
             {store.description}
           </p>
 
+          {store.specialties && store.specialties.length > 0 ? (
+            <div className="mt-2.5 flex flex-wrap gap-1">
+              {store.specialties.map((item) => (
+                <span
+                  key={item}
+                  className="px-2 py-0.5 rounded-full bg-zinc-100 text-[10px] font-bold text-zinc-600"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          ) : null}
+
           <div className="mt-4 pt-3 border-t border-zinc-100 flex flex-wrap items-center gap-y-2 gap-x-4 text-xs text-zinc-500">
             <span className="flex items-center gap-1">
               <MapPin className="w-3.5 h-3.5 text-zinc-400" />
+              {store.neighborhood ? `${store.neighborhood}, ` : ""}
               {store.city}/{store.state}
             </span>
             <span className="flex items-center gap-1">

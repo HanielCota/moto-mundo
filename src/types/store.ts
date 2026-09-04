@@ -9,10 +9,13 @@ export interface Store {
   ratingCount: number;
   city: string;
   state: string;
+  address?: string;
+  neighborhood?: string;
   activeYears: number;
   pickupAvailable: boolean;
   shippingPolicy: string;
   returnPolicy: string;
   instagram?: string;
   whatsapp?: string;
+  specialties?: string[];
 }

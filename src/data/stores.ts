@@ -13,6 +13,8 @@ export const STORES: Store[] = [
     ratingCount: 342,
     city: "Belo Horizonte",
     state: "MG",
+    address: "Rua da Oficina, 420",
+    neighborhood: "Santa Efigênia",
     activeYears: 14,
     pickupAvailable: true,
     shippingPolicy:
@@ -21,6 +23,7 @@ export const STORES: Store[] = [
       "Garantia de 90 dias e devolução gratuita em até 7 dias corridos após o recebimento da mercadoria.",
     instagram: "https://instagram.com/000000",
     whatsapp: "https://wa.me/00000000000",
+    specialties: ["Motores", "Preparação", "Pistões"],
   },
   {
     id: "store-america-racing",
@@ -34,6 +37,8 @@ export const STORES: Store[] = [
     ratingCount: 219,
     city: "Campinas",
     state: "SP",
+    address: "Av. das Oficinas, 1180",
+    neighborhood: "Jardim do Lago",
     activeYears: 9,
     pickupAvailable: true,
     shippingPolicy:
@@ -42,6 +47,7 @@ export const STORES: Store[] = [
       "Trocas de tamanho sem custo em vestuário e devolução facilitada em até 7 dias.",
     instagram: "https://instagram.com/000000",
     whatsapp: "https://wa.me/00000000000",
+    specialties: ["Importados", "Escapamentos", "Rodas"],
   },
   {
     id: "store-gringa-mx",
@@ -55,6 +61,8 @@ export const STORES: Store[] = [
     ratingCount: 488,
     city: "Curitiba",
     state: "PR",
+    address: "Rua do Motocross, 88",
+    neighborhood: "Rebouças",
     activeYears: 12,
     pickupAvailable: false,
     shippingPolicy:
@@ -63,6 +71,7 @@ export const STORES: Store[] = [
       "Garantia estendida do fabricante e troca ágil de numeração de botas e capacetes.",
     instagram: "https://instagram.com/000000",
     whatsapp: "https://wa.me/00000000000",
+    specialties: ["Capacetes", "Botas", "Vestuário"],
   },
   {
     id: "store-moto-braga",
@@ -76,6 +85,8 @@ export const STORES: Store[] = [
     ratingCount: 175,
     city: "Chapecó",
     state: "SC",
+    address: "Av. Getúlio Vargas, 1550",
+    neighborhood: "Centro",
     activeYears: 18,
     pickupAvailable: true,
     shippingPolicy:
@@ -84,6 +95,7 @@ export const STORES: Store[] = [
       "Garantia de fábrica contra defeitos de fabricação em borrachas e componentes mecânicos.",
     instagram: "https://instagram.com/000000",
     whatsapp: "https://wa.me/00000000000",
+    specialties: ["Pneus", "Reposição", "Óleos"],
   },
   {
     id: "store-off-road-store",
@@ -97,6 +109,8 @@ export const STORES: Store[] = [
     ratingCount: 260,
     city: "Ribeirão Preto",
     state: "SP",
+    address: "Rua das Trilhas, 310",
+    neighborhood: "Vila Tibério",
     activeYears: 7,
     pickupAvailable: false,
     shippingPolicy:
@@ -105,5 +119,6 @@ export const STORES: Store[] = [
       "Suporte técnico especializado para dúvidas de compatibilidade e devolução garantida.",
     instagram: "https://instagram.com/000000",
     whatsapp: "https://wa.me/00000000000",
+    specialties: ["Proteções", "Guidões", "Acessórios"],
   },
 ];

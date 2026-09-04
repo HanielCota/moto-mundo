@@ -20,21 +20,21 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-zinc-950 text-white py-16 md:py-24 border-b border-zinc-800">
+    <section className="relative overflow-hidden bg-zinc-950 text-white py-20 md:py-28 border-b border-zinc-800">
       {/* Background Motocross Action Photo with responsive gradient overlays */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
           src="/images/hero.png"
-          alt="Motocross Action Jump"
+          alt="Piloto de motocross em salto"
           fill
           priority
           sizes="100vw"
           quality={90}
-          className="object-cover object-[75%_center] sm:object-center lg:object-[82%_center] opacity-65 md:opacity-80 filter contrast-105"
+          className="object-cover object-[78%_12%] sm:object-[80%_8%] lg:object-[84%_6%] opacity-70 md:opacity-85 contrast-105"
         />
         {/* Directional gradient: solid dark on the left (for text readability), transparent on the right (to showcase the motocross rider) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/85 to-zinc-950/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-zinc-950/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/10" />
       </div>
 
 
@@ -48,7 +48,7 @@ export function HeroSection() {
 
           {/* Strong Off-Road Title */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] uppercase text-white">
-            Domine qualquer trilha com equipamentos de{" "}
+            Domine qualquer pista com equipamentos de{" "}
             <span className="text-orange-500 inline-block">alta performance</span>
           </h1>
 
