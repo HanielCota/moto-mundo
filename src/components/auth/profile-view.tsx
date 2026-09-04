@@ -106,14 +106,22 @@ export function ProfileView() {
             <p className="text-xs text-zinc-500 mt-0.5">{currentUser.email}</p>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg border border-zinc-200 text-xs font-bold text-zinc-700 hover:bg-zinc-50 cursor-pointer"
-        >
-          <LogOut className="size-4" />
-          Sair
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/painel"
+            className="inline-flex items-center justify-center h-10 px-4 rounded-lg bg-zinc-950 text-white text-xs font-bold"
+          >
+            Painel da loja
+          </Link>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg border border-zinc-200 text-xs font-bold text-zinc-700 hover:bg-zinc-50 cursor-pointer"
+          >
+            <LogOut className="size-4" />
+            Sair
+          </button>
+        </div>
       </div>
 
       <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-2">

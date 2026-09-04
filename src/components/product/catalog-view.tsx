@@ -10,6 +10,7 @@ import {
   getStoreBySlugSync,
   getBrandBySlugSync,
 } from "@/lib/products";
+import { useSellerCatalog } from "@/hooks/use-seller-catalog";
 import { CATEGORIES } from "@/data/categories";
 import { SlidersHorizontal, PackageX, Sparkles, X, RotateCcw } from "lucide-react";
 import {
@@ -25,6 +26,7 @@ export function CatalogView() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const { products: sellerProducts } = useSellerCatalog();
 
   // Parse filters from URL
   const filters: FilterState = useMemo(() => {
@@ -45,20 +47,23 @@ export function CatalogView() {
 
   // Execute filtering
   const filteredProducts = useMemo(() => {
-    return searchProductsSync({
-      q: filters.q,
-      categoria: filters.categoria,
-      loja: filters.loja,
-      marca: filters.marca,
-      tamanho: filters.tamanho,
-      departamento: filters.departamento,
-      cor: filters.cor,
-      precoMin: filters.precoMin,
-      precoMax: filters.precoMax,
-      disponivel: filters.disponivel,
-      ordem: filters.ordem,
-    });
-  }, [filters]);
+    return searchProductsSync(
+      {
+        q: filters.q,
+        categoria: filters.categoria,
+        loja: filters.loja,
+        marca: filters.marca,
+        tamanho: filters.tamanho,
+        departamento: filters.departamento,
+        cor: filters.cor,
+        precoMin: filters.precoMin,
+        precoMax: filters.precoMax,
+        disponivel: filters.disponivel,
+        ordem: filters.ordem,
+      },
+      sellerProducts
+    );
+  }, [filters, sellerProducts]);
 
   // Synchronize state with URL
   const updateUrl = (updated: Partial<FilterState>) => {

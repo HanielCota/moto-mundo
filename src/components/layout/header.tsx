@@ -89,6 +89,12 @@ export function Header() {
               >
                 Lojas
               </Link>
+              <Link
+                href="/painel"
+                className="px-3 py-2 rounded-md text-sm font-semibold text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 transition-colors"
+              >
+                Painel
+              </Link>
             </nav>
 
             <div className="h-6 w-px bg-zinc-200 hidden lg:block mx-1" />

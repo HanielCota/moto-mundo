@@ -66,6 +66,12 @@ export function MiniFooter() {
               >
                 Catálogo
               </Link>
+              <Link
+                href="/painel"
+                className="h-8 px-3 inline-flex items-center rounded-lg text-xs font-semibold text-zinc-600 hover:text-orange-600 hover:bg-zinc-50 transition-colors"
+              >
+                Painel
+              </Link>
             </div>
           </div>
 

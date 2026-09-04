@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, Search, ShoppingBag, Store, Tag, Sparkles, ChevronRight, Compass, UserRound, BadgeCheck } from "lucide-react";
+import { Menu, Search, ShoppingBag, Store, Tag, Sparkles, ChevronRight, Compass, UserRound, BadgeCheck, LayoutDashboard } from "lucide-react";
 import { SITE_SOCIAL } from "@/data/social";
 import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
 import { useAuth } from "@/hooks/use-auth";
@@ -118,6 +118,17 @@ export function MobileNav() {
             <span className="flex items-center gap-3">
               <Store className="w-4 h-4 text-orange-600" />
               Lojas Parceiras
+            </span>
+            <ChevronRight className="w-4 h-4 text-zinc-400" />
+          </Link>
+          <Link
+            href="/painel"
+            onClick={handleLinkClick}
+            className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 hover:bg-zinc-100 transition-colors"
+          >
+            <span className="flex items-center gap-3">
+              <LayoutDashboard className="w-4 h-4 text-orange-600" />
+              Painel da loja
             </span>
             <ChevronRight className="w-4 h-4 text-zinc-400" />
           </Link>

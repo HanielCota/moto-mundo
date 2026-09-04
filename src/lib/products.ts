@@ -138,8 +138,11 @@ export async function searchProducts(params: ProductSearchParams): Promise<Produ
 // Synchronous In-Memory Lookups (Client Components & Filters)
 // ==========================================
 
-function filterProductsCore(params: ProductSearchParams): Product[] {
-  let results = [...PRODUCTS];
+function filterProductsCore(
+  params: ProductSearchParams,
+  extraProducts: Product[] = []
+): Product[] {
+  let results = [...PRODUCTS, ...extraProducts];
 
   // Text search (name, description, specs, brand) with diacritics/accent normalization
   if (params.q && params.q.trim() !== "") {
@@ -276,8 +279,11 @@ function filterProductsCore(params: ProductSearchParams): Product[] {
   return results;
 }
 
-export function searchProductsSync(params: ProductSearchParams): Product[] {
-  return filterProductsCore(params);
+export function searchProductsSync(
+  params: ProductSearchParams,
+  extraProducts: Product[] = []
+): Product[] {
+  return filterProductsCore(params, extraProducts);
 }
 
 export function getStoreByIdSync(id: string): Store | undefined {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getAllStores } from "@/lib/products";
 import { StoreCard } from "@/components/store/store-card";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
@@ -82,14 +83,12 @@ export default async function LojasPage() {
             página própria, produtos e contato direto.
           </p>
         </div>
-        <a
-          href="https://wa.me/00000000000"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/painel/produtos/novo"
           className="inline-flex items-center justify-center h-11 px-5 rounded-xl bg-orange-600 hover:bg-orange-500 text-sm font-bold shrink-0"
         >
-          Falar com o Moto Mundo
-        </a>
+          Abrir painel de cadastro
+        </Link>
       </div>
     </div>
   );

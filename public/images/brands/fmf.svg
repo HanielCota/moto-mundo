@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="12" fill="#2563EB"/>
-  <path fill="#FFFFFF" d="M14 16 H50 V24 H26 V28.5 H46 V36.5 H26 V48 H14 Z"/>
+  <rect width="64" height="64" rx="12" fill="#111111"/>
+  <ellipse cx="32" cy="32" rx="24" ry="16" fill="#E10600"/>
+  <ellipse cx="32" cy="32" rx="20" ry="12.5" fill="#111111"/>
+  <text x="32" y="37" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="16" font-weight="900" fill="#FFFFFF" letter-spacing="-0.6" font-style="italic">FMF</text>
 </svg>

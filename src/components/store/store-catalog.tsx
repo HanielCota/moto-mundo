@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Category, Product, Store } from "@/types";
 import { ProductCard } from "@/components/product/product-card";
 import { StoreProcess } from "@/components/store/store-process";
+import { useSellerCatalog } from "@/hooks/use-seller-catalog";
 import { MapPin, Package, RotateCcw, Truck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,13 +19,20 @@ interface StoreCatalogProps {
 export function StoreCatalog({ store, products, categories }: StoreCatalogProps) {
   const [tab, setTab] = useState<StoreTab>("produtos");
   const [categorySlug, setCategorySlug] = useState("");
+  const { products: sellerProducts } = useSellerCatalog();
+
+  const catalog = useMemo(() => {
+    const extras = sellerProducts.filter((item) => item.storeId === store.id);
+    const seen = new Set(products.map((item) => item.id));
+    return [...products, ...extras.filter((item) => !seen.has(item.id))];
+  }, [products, sellerProducts, store.id]);
 
   const visibleProducts = useMemo(() => {
-    if (!categorySlug) return products;
+    if (!categorySlug) return catalog;
     const category = categories.find((item) => item.slug === categorySlug);
-    if (!category) return products;
-    return products.filter((product) => product.categoryId === category.id);
-  }, [products, categories, categorySlug]);
+    if (!category) return catalog;
+    return catalog.filter((product) => product.categoryId === category.id);
+  }, [catalog, categories, categorySlug]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

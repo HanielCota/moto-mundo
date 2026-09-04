@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Store } from "@/types";
@@ -5,13 +7,19 @@ import { RatingStars } from "@/components/shared/rating-stars";
 import { MapPin, Calendar, Store as StoreIcon, ArrowRight, CheckCircle } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
 import { getProductsByStoreSync } from "@/lib/products";
+import { useSellerCatalog } from "@/hooks/use-seller-catalog";
 
 interface StoreCardProps {
   store: Store;
 }
 
 export function StoreCard({ store }: StoreCardProps) {
-  const storeProducts = getProductsByStoreSync(store.id);
+  const catalogProducts = getProductsByStoreSync(store.id);
+  const { products: sellerProducts } = useSellerCatalog();
+  const extraCount = sellerProducts.filter(
+    (item) => item.storeId === store.id && !catalogProducts.some((p) => p.id === item.id)
+  ).length;
+  const storeProductsCount = catalogProducts.length + extraCount;
 
   return (
     <article className="group flex flex-col bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-xs hover:shadow-md hover:border-zinc-300 transition-all">
@@ -88,7 +96,7 @@ export function StoreCard({ store }: StoreCardProps) {
             </span>
             <span className="flex items-center gap-1 font-medium text-zinc-700">
               <StoreIcon className="w-3.5 h-3.5 text-orange-600" />
-              {storeProducts.length} produtos
+              {storeProductsCount} produtos
             </span>
           </div>
         </div>
