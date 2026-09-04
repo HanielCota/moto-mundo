@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ShieldCheck, Lock, CreditCard } from "lucide-react";
 import { LogoIcon } from "./logo";
+import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
 
 export function MiniFooter() {
   return (
@@ -18,6 +19,29 @@ export function MiniFooter() {
                 © {new Date().getFullYear()} Moto Mundo Marketplace Ltda. • CNPJ 45.892.114/0001-83
               </p>
             </div>
+          </div>
+
+          {/* Social Links: Instagram & WhatsApp */}
+          <div className="flex items-center gap-3 text-xs">
+            <a
+              href="https://instagram.com/motomundo.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-zinc-600 hover:text-pink-600 font-medium transition-colors"
+            >
+              <InstagramIcon className="w-3.5 h-3.5 text-pink-500" />
+              <span>Instagram</span>
+            </a>
+            <span className="text-zinc-300">•</span>
+            <a
+              href="https://wa.me/5531998765432"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-zinc-600 hover:text-emerald-600 font-medium transition-colors"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-500" />
+              <span>WhatsApp</span>
+            </a>
           </div>
 
           {/* Trust, Security & Payment Summary */}
