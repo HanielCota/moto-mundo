@@ -126,7 +126,7 @@ export function MobileNav() {
         </div>
 
         {/* Stores Section */}
-        <div className="p-4">
+        <div className="p-4 border-b border-zinc-100">
           <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 px-3 mb-2">
             Lojas em Destaque
           </h4>
@@ -144,7 +144,33 @@ export function MobileNav() {
             ))}
           </div>
         </div>
+
+        {/* Redes Sociais */}
+        <div className="p-4 bg-zinc-50/70">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 px-3 mb-2.5">
+            Siga nas Redes
+          </h4>
+          <div className="grid grid-cols-2 gap-2 px-1">
+            <a
+              href="https://instagram.com/motomundo.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white border border-zinc-200 text-xs font-bold text-zinc-800 hover:text-pink-600 hover:border-pink-300 transition-all shadow-xs"
+            >
+              <span>Instagram</span>
+            </a>
+            <a
+              href="https://wa.me/5531998765432"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-all shadow-xs"
+            >
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
       </SheetContent>
     </Sheet>
   );
 }
+

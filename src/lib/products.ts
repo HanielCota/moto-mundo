@@ -1,12 +1,17 @@
-import { Product, Store, Category } from "@/types";
+import { Product, Store, Category, Brand } from "@/types";
 import { PRODUCTS } from "@/data/products";
 import { STORES } from "@/data/stores";
 import { CATEGORIES } from "@/data/categories";
+import { BRANDS } from "@/data/brands";
 
 export interface ProductSearchParams {
   q?: string;
   categoria?: string;
   loja?: string;
+  marca?: string;
+  tamanho?: string;
+  departamento?: string;
+  cor?: string;
   precoMin?: number | string;
   precoMax?: number | string;
   disponivel?: string | boolean;
@@ -28,6 +33,11 @@ export async function getAllStores(): Promise<Store[]> {
 export async function getAllCategories(): Promise<Category[]> {
   return CATEGORIES;
 }
+
+export async function getAllBrands(): Promise<Brand[]> {
+  return BRANDS;
+}
+
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
   return PRODUCTS.find((p) => p.slug === slug);
@@ -109,16 +119,17 @@ export async function searchProducts(params: ProductSearchParams): Promise<Produ
 function filterProductsCore(params: ProductSearchParams): Product[] {
   let results = [...PRODUCTS];
 
-  // Text search (name, description, specs) with diacritics/accent normalization
+  // Text search (name, description, specs, brand) with diacritics/accent normalization
   if (params.q && params.q.trim() !== "") {
     const query = normalizeSearchTerm(params.q);
     results = results.filter((p) => {
       const nameMatch = normalizeSearchTerm(p.name).includes(query);
       const descMatch = normalizeSearchTerm(p.description).includes(query);
+      const brandMatch = p.brand ? normalizeSearchTerm(p.brand).includes(query) : false;
       const specsMatch = Object.values(p.specs).some((val) =>
         normalizeSearchTerm(val).includes(query)
       );
-      return nameMatch || descMatch || specsMatch;
+      return nameMatch || descMatch || specsMatch || brandMatch;
     });
   }
 
@@ -140,6 +151,47 @@ function filterProductsCore(params: ProductSearchParams): Product[] {
     if (store) {
       results = results.filter((p) => p.storeId === store.id);
     }
+  }
+
+  // Brand filter by slug or name
+  if (params.marca && params.marca !== "todas") {
+    const brandQuery = normalizeSearchTerm(params.marca);
+    results = results.filter((p) => {
+      const slugMatch = p.brandSlug && normalizeSearchTerm(p.brandSlug) === brandQuery;
+      const nameMatch = p.brand && normalizeSearchTerm(p.brand) === brandQuery;
+      return slugMatch || nameMatch;
+    });
+  }
+
+  // Department filter (masculino / feminino / unissex)
+  if (params.departamento && params.departamento !== "todos") {
+    const dep = params.departamento.toLowerCase();
+    results = results.filter((p) => {
+      if (!p.department) return true;
+      if (dep === "masculino") {
+        return p.department === "masculino" || p.department === "unissex";
+      }
+      if (dep === "feminino") {
+        return p.department === "feminino" || p.department === "unissex";
+      }
+      return p.department === dep;
+    });
+  }
+
+  // Size filter (M, G, 40, 39, etc.)
+  if (params.tamanho && params.tamanho !== "todos") {
+    const sizeQuery = params.tamanho.trim().toLowerCase();
+    results = results.filter((p) => {
+      return p.sizes?.some((s) => s.trim().toLowerCase() === sizeQuery);
+    });
+  }
+
+  // Color filter (Preto, Branco, Vermelho, Azul, Amarelo, Verde, Laranja)
+  if (params.cor && params.cor !== "todas") {
+    const colorQuery = normalizeSearchTerm(params.cor);
+    results = results.filter((p) => {
+      return p.colors?.some((c) => normalizeSearchTerm(c) === colorQuery);
+    });
   }
 
   // Price range filters with inverted range safety check
@@ -214,6 +266,14 @@ export function getCategoryByIdSync(id: string): Category | undefined {
   return CATEGORIES.find((c) => c.id === id);
 }
 
+export function getBrandBySlugSync(slug: string): Brand | undefined {
+  return BRANDS.find((b) => b.slug === slug || normalizeSearchTerm(b.name) === normalizeSearchTerm(slug));
+}
+
+export function getAllBrandsSync(): Brand[] {
+  return BRANDS;
+}
+
 export function getStoreBySlugSync(slug: string): Store | undefined {
   return STORES.find((s) => s.slug === slug);
 }
@@ -231,3 +291,4 @@ export function getProductsByStoreSync(storeIdOrSlug: string): Product[] {
 export function getProductBySlugSync(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug);
 }
+

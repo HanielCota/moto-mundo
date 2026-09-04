@@ -96,20 +96,30 @@ export function ProductCard({ product, className }: ProductCardProps) {
 
         {/* Content Details */}
         <div className="p-4 flex flex-col gap-2">
-          {/* Category & Store */}
+          {/* Brand, Category & Store */}
           <div className="flex items-center justify-between text-xs text-zinc-500">
-            {category && (
-              <Link
-                href={`/produtos?categoria=${category.slug}`}
-                className="hover:text-zinc-800 transition-colors uppercase font-semibold text-[10px] tracking-wider"
-              >
-                {category.name}
-              </Link>
-            )}
+            <div className="flex items-center gap-1.5 truncate">
+              {product.brand && (
+                <Link
+                  href={`/produtos?marca=${product.brandSlug || product.brand.toLowerCase()}`}
+                  className="font-bold text-zinc-950 text-[10px] uppercase tracking-wider bg-zinc-100 hover:bg-orange-100 hover:text-orange-700 px-1.5 py-0.5 rounded transition-colors"
+                >
+                  {product.brand}
+                </Link>
+              )}
+              {category && (
+                <Link
+                  href={`/produtos?categoria=${category.slug}`}
+                  className="hover:text-zinc-800 transition-colors uppercase font-medium text-[10px] tracking-wider truncate"
+                >
+                  {category.name}
+                </Link>
+              )}
+            </div>
             {store && (
               <Link
                 href={`/loja/${store.slug}`}
-                className="hover:text-orange-600 font-medium truncate max-w-[130px] transition-colors"
+                className="hover:text-orange-600 font-medium truncate max-w-[120px] transition-colors text-[11px]"
                 title={store.name}
               >
                 {store.name}
@@ -121,6 +131,24 @@ export function ProductCard({ product, className }: ProductCardProps) {
           <h3 className="text-sm font-semibold text-zinc-900 line-clamp-2 leading-snug group-hover:text-orange-600 transition-colors">
             <Link href={`/produto/${product.slug}`}>{product.name}</Link>
           </h3>
+
+          {/* Available Sizes or Department pills if available */}
+          {product.sizes && product.sizes.length > 0 && (
+            <div className="flex items-center gap-1 overflow-hidden text-[10px] text-zinc-500">
+              <span className="font-medium text-zinc-400">Tam:</span>
+              <div className="flex items-center gap-1 truncate">
+                {product.sizes.slice(0, 4).map((s) => (
+                  <span key={s} className="px-1 py-0.2 bg-zinc-50 border border-zinc-200 rounded text-zinc-600 font-semibold">
+                    {s}
+                  </span>
+                ))}
+                {product.sizes.length > 4 && (
+                  <span className="text-[9px] text-zinc-400">+{product.sizes.length - 4}</span>
+                )}
+              </div>
+            </div>
+          )}
+
 
           {/* Ratings */}
           <div className="mt-0.5">

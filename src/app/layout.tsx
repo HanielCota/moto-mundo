@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
-import { MiniFooter } from "@/components/layout/mini-footer";
+import { Footer } from "@/components/layout/footer";
 import { BackToTop } from "@/components/layout/back-to-top";
+import { FloatingWhatsApp } from "@/components/shared/floating-whatsapp";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
@@ -54,10 +55,12 @@ export default function RootLayout({
       >
         <Header />
         <main className="flex-1">{children}</main>
-        <MiniFooter />
+        <Footer />
+        <FloatingWhatsApp />
         <BackToTop />
         <Toaster />
       </body>
     </html>
   );
 }
+

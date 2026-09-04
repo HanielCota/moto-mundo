@@ -9,7 +9,10 @@ export interface CartItem {
   quantity: number;
   stock: number;
   freeShipping: boolean;
+  selectedSize?: string;
+  selectedColor?: string;
 }
+
 
 export interface CartTotals {
   subtotal: number;

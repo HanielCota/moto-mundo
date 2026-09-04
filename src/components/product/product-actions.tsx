@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Zap } from "lucide-react";
+import { ShoppingCart, Zap, Check } from "lucide-react";
 import { Product, Store } from "@/types";
 import { useCartStore } from "@/stores/cart-store";
 import { toast } from "sonner";
 import { StockStatus } from "@/components/shared/stock-status";
 import { QuantitySelector } from "@/components/shared/quantity-selector";
+import { cn } from "@/lib/utils";
 
 interface ProductActionsProps {
   product: Product;
@@ -20,6 +21,12 @@ export function ProductActions({ product, store }: ProductActionsProps) {
   const isOutOfStock = product.stock <= 0;
 
   const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState<string>(
+    product.sizes && product.sizes.length > 0 ? product.sizes[0] : ""
+  );
+  const [selectedColor, setSelectedColor] = useState<string>(
+    product.colors && product.colors.length > 0 ? product.colors[0] : ""
+  );
 
   const handleAddToCart = () => {
     if (isOutOfStock) return;
@@ -35,13 +42,17 @@ export function ProductActions({ product, store }: ProductActionsProps) {
         unitPrice: product.price,
         stock: product.stock,
         freeShipping: product.freeShipping,
+        selectedSize: selectedSize || undefined,
+        selectedColor: selectedColor || undefined,
       },
       quantity
     );
 
     if (result.success) {
       toast.success(result.message, {
-        description: `${quantity}x ${product.name} adicionado ao carrinho.`,
+        description: `${quantity}x ${product.name} ${
+          selectedSize ? `(Tam: ${selectedSize})` : ""
+        } adicionado ao carrinho.`,
         action: {
           label: "Ver Carrinho",
           onClick: () => router.push("/carrinho"),
@@ -66,6 +77,8 @@ export function ProductActions({ product, store }: ProductActionsProps) {
         unitPrice: product.price,
         stock: product.stock,
         freeShipping: product.freeShipping,
+        selectedSize: selectedSize || undefined,
+        selectedColor: selectedColor || undefined,
       },
       quantity
     );
@@ -86,9 +99,72 @@ export function ProductActions({ product, store }: ProductActionsProps) {
         )}
       </div>
 
+      {/* Size Selector */}
+      {product.sizes && product.sizes.length > 0 && !isOutOfStock && (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-zinc-800 uppercase tracking-wider">
+              Tamanho: <span className="text-orange-600 font-black">{selectedSize}</span>
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {product.sizes.map((s) => {
+              const isSelected = selectedSize === s;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setSelectedSize(s)}
+                  className={cn(
+                    "px-3.5 py-1.5 rounded-lg text-xs font-bold border transition-all cursor-pointer",
+                    isSelected
+                      ? "bg-zinc-900 text-white border-zinc-900 shadow-xs"
+                      : "bg-white text-zinc-700 border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
+                  )}
+                >
+                  {s}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Color Selector */}
+      {product.colors && product.colors.length > 0 && !isOutOfStock && (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-zinc-800 uppercase tracking-wider">
+              Cor: <span className="text-orange-600 font-black">{selectedColor}</span>
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {product.colors.map((c) => {
+              const isSelected = selectedColor === c;
+              return (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setSelectedColor(c)}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer",
+                    isSelected
+                      ? "bg-zinc-900 text-white border-zinc-900 shadow-xs"
+                      : "bg-white text-zinc-700 border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
+                  )}
+                >
+                  {isSelected && <Check className="w-3 h-3 text-orange-400" />}
+                  <span>{c}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Quantity Selector */}
       {!isOutOfStock && (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 pt-1">
           <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">
             Quantidade:
           </label>
@@ -111,7 +187,7 @@ export function ProductActions({ product, store }: ProductActionsProps) {
           type="button"
           onClick={handleAddToCart}
           disabled={isOutOfStock}
-          className={`h-12 px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.98] ${
+          className={`h-12 px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.98] cursor-pointer ${
             isOutOfStock
               ? "bg-zinc-100 text-zinc-400 cursor-not-allowed border border-zinc-200"
               : "bg-white border-2 border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-white"
@@ -125,7 +201,7 @@ export function ProductActions({ product, store }: ProductActionsProps) {
           type="button"
           onClick={handleBuyNow}
           disabled={isOutOfStock}
-          className={`h-12 px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] ${
+          className={`h-12 px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer ${
             isOutOfStock
               ? "bg-zinc-200 text-zinc-400 cursor-not-allowed"
               : "bg-orange-600 hover:bg-orange-700 text-white shadow-orange-600/20"

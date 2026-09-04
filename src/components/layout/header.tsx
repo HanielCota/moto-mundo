@@ -4,24 +4,52 @@ import { CartBadge } from "./cart-badge";
 import { MobileNav } from "./mobile-nav";
 import { LogoLink } from "./logo";
 import { CATEGORIES } from "@/data/categories";
+import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-zinc-200 transition-all">
       {/* Top Bar / Announcement Banner (Hidden on mobile) */}
-      <div className="hidden md:block bg-zinc-950 text-white py-2.5 sm:py-3 px-4 border-b border-zinc-850 shadow-inner">
-        <div className="max-w-7xl mx-auto flex items-center justify-center text-center gap-2 text-xs sm:text-sm md:text-base font-bold tracking-wide">
-          <span className="text-orange-500 text-base sm:text-lg select-none">🚀</span>
-          <span>
-            Especialistas em Off-Road{" "}
-            <span className="text-zinc-500 mx-1.5 font-normal">•</span>{" "}
-            <span className="text-orange-400">Frete Grátis</span> e Parcelamento em até{" "}
-            <span className="text-white underline decoration-orange-500 underline-offset-4 decoration-2">
-              10x sem juros
+      <div className="hidden md:block bg-zinc-950 text-white py-2 px-4 border-b border-zinc-850 shadow-inner">
+        <div className="max-w-7xl mx-auto flex items-center justify-between text-xs font-bold tracking-wide">
+          <div className="flex items-center gap-2">
+            <span className="text-orange-500 text-sm select-none">🚀</span>
+            <span>
+              Especialistas em Off-Road{" "}
+              <span className="text-zinc-500 mx-1.5 font-normal">•</span>{" "}
+              <span className="text-orange-400">Frete Grátis</span> e Parcelamento em até{" "}
+              <span className="text-white underline decoration-orange-500 underline-offset-4 decoration-2">
+                10x sem juros
+              </span>
             </span>
-          </span>
+          </div>
+
+          {/* Redes Sociais: Instagram & WhatsApp */}
+          <div className="flex items-center gap-4 text-xs font-semibold text-zinc-400">
+            <a
+              href="https://instagram.com/motomundo.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
+            >
+              <InstagramIcon className="w-3.5 h-3.5 text-pink-500" />
+              <span>Instagram</span>
+            </a>
+            <span className="text-zinc-700">|</span>
+            <a
+              href="https://wa.me/5531998765432"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-400" />
+              <span>WhatsApp</span>
+            </a>
+          </div>
         </div>
       </div>
+
+
 
       {/* Main Header Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

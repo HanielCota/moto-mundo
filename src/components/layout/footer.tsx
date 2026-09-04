@@ -26,33 +26,10 @@ import {
 import { CATEGORIES } from "@/data/categories";
 import { STORES } from "@/data/stores";
 import { toast } from "sonner";
+import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
 
-function InstagramIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-    </svg>
-  );
-}
 
-function YoutubeIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
-      <polygon points="10 15 15 12 10 9 10 15" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
 
-function FacebookIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-    </svg>
-  );
-}
 
 export function Footer() {
   const [copiedCoupon, setCopiedCoupon] = useState(false);
@@ -267,37 +244,31 @@ export function Footer() {
               <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block">
                 Siga nas Redes
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <a
-                  href="https://instagram.com"
+                  href="https://instagram.com/motomundo.br"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram Moto Mundo"
-                  className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 hover:border-orange-500/50 transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800 hover:border-pink-500/50 transition-all hover:scale-105 group"
                 >
-                  <InstagramIcon className="w-4 h-4" />
+                  <InstagramIcon className="w-4 h-4 text-pink-500 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-semibold">Instagram</span>
                 </a>
                 <a
-                  href="https://youtube.com"
+                  href="https://wa.me/5531998765432"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="YouTube Moto Mundo"
-                  className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 hover:border-red-500/50 transition-all hover:scale-105"
+                  aria-label="WhatsApp Moto Mundo"
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800 hover:border-emerald-500/50 transition-all hover:scale-105 group"
                 >
-                  <YoutubeIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook Moto Mundo"
-                  className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 hover:border-blue-500/50 transition-all hover:scale-105"
-                >
-                  <FacebookIcon className="w-4 h-4" />
+                  <WhatsAppIcon className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-semibold">WhatsApp</span>
                 </a>
               </div>
             </div>
           </div>
+
 
           {/* Categorias (3 cols on lg) */}
           <div className="lg:col-span-3 space-y-4">

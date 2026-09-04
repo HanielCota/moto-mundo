@@ -4,7 +4,12 @@ import { useMemo, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ProductCard } from "@/components/product/product-card";
 import { ProductFilters, FilterState } from "@/components/product/product-filters";
-import { searchProductsSync, getCategoryBySlugSync, getStoreBySlugSync } from "@/lib/products";
+import {
+  searchProductsSync,
+  getCategoryBySlugSync,
+  getStoreBySlugSync,
+  getBrandBySlugSync,
+} from "@/lib/products";
 import { CATEGORIES } from "@/data/categories";
 import { SlidersHorizontal, PackageX, Sparkles, X, RotateCcw } from "lucide-react";
 import {
@@ -27,6 +32,10 @@ export function CatalogView() {
       q: searchParams.get("q") || "",
       categoria: searchParams.get("categoria") || "",
       loja: searchParams.get("loja") || "",
+      marca: searchParams.get("marca") || "",
+      tamanho: searchParams.get("tamanho") || "",
+      departamento: searchParams.get("departamento") || "",
+      cor: searchParams.get("cor") || "",
       precoMin: searchParams.get("precoMin") || "",
       precoMax: searchParams.get("precoMax") || "",
       disponivel: searchParams.get("disponivel") === "true",
@@ -40,6 +49,10 @@ export function CatalogView() {
       q: filters.q,
       categoria: filters.categoria,
       loja: filters.loja,
+      marca: filters.marca,
+      tamanho: filters.tamanho,
+      departamento: filters.departamento,
+      cor: filters.cor,
       precoMin: filters.precoMin,
       precoMax: filters.precoMax,
       disponivel: filters.disponivel,
@@ -73,14 +86,20 @@ export function CatalogView() {
 
   const activeCategory = filters.categoria ? getCategoryBySlugSync(filters.categoria) : null;
   const activeStore = filters.loja ? getStoreBySlugSync(filters.loja) : null;
+  const activeBrand = filters.marca ? getBrandBySlugSync(filters.marca) : null;
   const hasActiveFilters = Boolean(
     filters.q ||
     filters.categoria ||
     filters.loja ||
+    filters.marca ||
+    filters.tamanho ||
+    filters.departamento ||
+    filters.cor ||
     filters.precoMin ||
     filters.precoMax ||
     filters.disponivel
   );
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -226,6 +245,62 @@ export function CatalogView() {
             </span>
           )}
 
+          {activeBrand && (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-200 text-xs font-semibold text-orange-900">
+              Marca: {activeBrand.name}
+              <button
+                type="button"
+                onClick={() => updateUrl({ marca: "" })}
+                className="hover:text-red-500 cursor-pointer"
+                aria-label="Remover filtro de marca"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </span>
+          )}
+
+          {filters.departamento && (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-800 capitalize">
+              Depto: {filters.departamento}
+              <button
+                type="button"
+                onClick={() => updateUrl({ departamento: "" })}
+                className="hover:text-red-500 cursor-pointer"
+                aria-label="Remover filtro de departamento"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </span>
+          )}
+
+          {filters.tamanho && (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-800">
+              Tam: {filters.tamanho}
+              <button
+                type="button"
+                onClick={() => updateUrl({ tamanho: "" })}
+                className="hover:text-red-500 cursor-pointer"
+                aria-label="Remover filtro de tamanho"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </span>
+          )}
+
+          {filters.cor && (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-800">
+              Cor: {filters.cor}
+              <button
+                type="button"
+                onClick={() => updateUrl({ cor: "" })}
+                className="hover:text-red-500 cursor-pointer"
+                aria-label="Remover filtro de cor"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </span>
+          )}
+
           {activeStore && (
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-800">
               Loja: {activeStore.name}
@@ -308,18 +383,19 @@ export function CatalogView() {
 
               {/* Quick suggestions */}
               <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-                <span className="text-xs text-zinc-400">Sugestões rápidas:</span>
-                {["Capacetes", "Botas", "Pneus", "Escapamentos"].map((term) => (
+                <span className="text-xs text-zinc-400">Sugestões de marcas:</span>
+                {["Yamaha", "Honda", "Alpinestars", "Motul", "Pirelli", "Bell"].map((term) => (
                   <button
                     key={term}
                     type="button"
-                    onClick={() => updateUrl({ q: term, categoria: "", loja: "", precoMin: "", precoMax: "" })}
-                    className="px-2.5 py-1 rounded-md bg-zinc-100 hover:bg-orange-50 hover:text-orange-600 text-xs font-semibold text-zinc-700 transition-colors"
+                    onClick={() => updateUrl({ q: term, categoria: "", loja: "", marca: "", tamanho: "", departamento: "", cor: "", precoMin: "", precoMax: "" })}
+                    className="px-2.5 py-1 rounded-md bg-zinc-100 hover:bg-orange-50 hover:text-orange-600 text-xs font-semibold text-zinc-700 transition-colors cursor-pointer"
                   >
                     {term}
                   </button>
                 ))}
               </div>
+
 
               <button
                 type="button"
